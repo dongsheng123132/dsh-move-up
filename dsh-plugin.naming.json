@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "policy": "dsh-plugin-naming/v1",
+  "plugin": {
+    "namespace": "dongsheng123132",
+    "name": "move-up",
+    "coordinate": "dongsheng123132/move-up",
+    "packageName": "dsh-move-up"
+  },
+  "names": {
+    "pluginNames": [
+      "move-up"
+    ],
+    "loaderIds": [
+      "dsh-move-up"
+    ],
+    "services": [
+      "moveUpWorkspace"
+    ],
+    "tools": [],
+    "commands": [],
+    "skills": [],
+    "skillProviders": [],
+    "events": [],
+    "settingsNamespaces": [],
+    "routes": [
+      {
+        "kind": "exact",
+        "path": "/api/plugins/dsh-move-up/move"
+      }
+    ]
+  }
+}

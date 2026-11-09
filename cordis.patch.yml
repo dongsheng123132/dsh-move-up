@@ -1,0 +1,4 @@
+- insert:
+    - id: dsh-move-up
+      name: dsh-move-up
+      # Stateless one-shot ordering; no favorites or saved plugin state.

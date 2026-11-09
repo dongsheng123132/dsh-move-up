@@ -1,0 +1,80 @@
+{
+  "name": "dsh-move-up",
+  "version": "0.3.0",
+  "description": "Move a workspace to the top of the DeepSeek Harness sidebar once, from its menu. No favorites, pins, stars, or automatic reordering. 7 KB, no dependencies, no state.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": "./client/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/",
+    "client/",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh-CN.md",
+    "dsh-plugin.naming.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dongsheng123132/dsh-move-up.git"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test test/{client,composition}.test.mjs",
+    "check": "npm run typecheck && npm run build && npm test",
+    "prepack": "npm run build",
+    "pretest": "npm run build"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.5",
+    "@deepseek-ai/dsh-workspace": "0.2.1-rc.5",
+    "@deepseek-ai/dsh-client-connection": "0.2.1-rc.5"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "4.0.5",
+    "@deepseek-ai/dsh-workspace": "0.2.1-rc.5",
+    "@deepseek-ai/dsh-client-connection": "0.2.1-rc.5",
+    "@types/node": "24.10.1",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh",
+    "workspace",
+    "move-up",
+    "move-to-top",
+    "ordering",
+    "sidebar"
+  ],
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-client-connection": {
+      "optional": true
+    }
+  },
+  "homepage": "https://github.com/dongsheng123132/dsh-move-up",
+  "author": "He Fangsheng (https://www.hequbing.com)",
+  "bugs": {
+    "url": "https://github.com/dongsheng123132/dsh-move-up/issues"
+  }
+}
