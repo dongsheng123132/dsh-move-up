@@ -36,7 +36,7 @@ The registry write is also wrapped: a rejecting durable write becomes `write-fai
 
 | Order | API | Available since | If unavailable |
 | --- | --- | --- | --- |
-| 1 | `ctx.contextMenus.register({ target: 'workspace' })` — the same public client capability the built-in Rename/Delete workspace actions use: data only (`label`, `failureLabel`, `run`), host renders the row | DSH ≥ 0.2.2 (`@deepseek-ai/dsh-client-ui-context-menu` is published from `0.2.2-alpha.3`) | falls through |
+| 1 | `ctx.contextMenus.register({ target: 'workspace' })` — the same public client capability the built-in Rename/Delete workspace actions use: data only (`label`, `failureLabel`, `run`), host renders the row | DSH ≥ 0.2.2: inspected `@deepseek-ai/dsh-client-ui-workspace@0.2.2-rc.1/0.2.2-rc.3` — their `client.js` exposes `contextMenus.register(` plus the `workspace` and `session` targets; `0.2.1-rc.5` does not | falls through |
 | 2 | DOM decoration of the rendered workspace `…` menu: `[role="menu"]` + `button[role="menuitem"]`, workspace row captured from `[data-row-key^="workspace:"]`; no longer requires `data-menu-material`; skips a menu that already holds the legacy `data-wshub-move-top` row | all 0.2.x | the menu row is simply absent; nothing else breaks |
 
 Neither backend reorders anything by itself. Every click ends in one `insertBefore` on the host.
@@ -61,9 +61,13 @@ That row is the bug this release fixes: the published 0.3.0 could not be install
 
 `npm run compat:matrix` installs the real `@deepseek-ai/*` packages per host version into a throwaway directory, copies the built plugin in and re-runs `test/composition.test.mjs` there:
 
-<!-- MATRIX:TABLE -->
-Fill by running `npm run compat:matrix`; the committed evidence is `reports/compat-2026-11-17.json`.
-<!-- MATRIX:TABLE -->
+| host | cordis | declared | install | composition tests | structured menu | verdict |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.2.1-rc.5 | 4.0.5 | satisfied | ok (43 s cold) | **8/8** | absent in that host bundle → fallback | **PASS** |
+| 0.2.2-rc.1 | 4.1.0 | satisfied | ok | **8/8** | present | **PASS** |
+| 0.2.2-rc.3 | 4.1.0 | satisfied | ok | **8/8** | present | **PASS** |
+
+Run `node scripts/compat-matrix.mjs` (69.7 s on this machine, exit 0). The committed evidence is [`reports/compat-2026-11-17.json`](reports/compat-2026-11-17.json); `--json` prints the same report to stdout. The script re-reads each installed host package's version, refuses a stale `lib/` (mtime of `src/` vs `lib/`), and fails on anything other than HTTP 200/404 from the registry instead of guessing.
 <!-- MATRIX:END -->
 
 What the matrix does **not** do: it does not click through the desktop GUI. It proves the host contract, the plugin's activation and the durable reorder against real host packages; a human installing it in the desktop app is what closes the loop.

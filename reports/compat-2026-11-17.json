@@ -1,0 +1,440 @@
+{
+  "schema": "dsh-plugin-compat-matrix/1",
+  "generatedAt": "2026-11-17T11:26:09.490Z",
+  "repo": "/Users/dosen8618607105700/code/dsh-move-up排第一的dsh的插件",
+  "plugin": {
+    "name": "dsh-move-up",
+    "version": "0.4.0"
+  },
+  "toolchain": {
+    "node": "v23.11.0",
+    "npm": "10.9.2",
+    "platform": "darwin/arm64"
+  },
+  "registry": "https://registry.npmjs.org",
+  "options": {
+    "hosts": [
+      "0.2.1-rc.5",
+      "0.2.2-rc.1",
+      "0.2.2-rc.3"
+    ],
+    "keep": false,
+    "self": false
+  },
+  "builtArtifacts": {
+    "checked": true,
+    "stale": false,
+    "srcNewest": "src/service.ts @ 2026-11-17T11:16:15.023Z",
+    "libNewest": "lib/index.d.ts @ 2026-11-17T11:16:34.736Z",
+    "note": "the matrix runs the built lib/; run `npm run build` (or --self) if src/ changed"
+  },
+  "declaredCompatibility": {
+    "source": "engines.dsh",
+    "requirements": [
+      {
+        "name": "dsh",
+        "range": ">=0.2.1-rc.5",
+        "field": "engines.dsh"
+      }
+    ],
+    "note": "host rule: engines.dsh when present, else every @deepseek-ai/dsh / @deepseek-ai/dsh-* peer; semver.satisfies(host, range, { includePrerelease: true })"
+  },
+  "hosts": [
+    {
+      "host": "0.2.1-rc.5",
+      "cordis": "4.0.5",
+      "declared": {
+        "source": "engines.dsh",
+        "host": "0.2.1-rc.5",
+        "satisfied": true,
+        "requirements": [
+          {
+            "name": "dsh",
+            "range": ">=0.2.1-rc.5",
+            "field": "engines.dsh",
+            "satisfied": true
+          }
+        ],
+        "reason": null
+      },
+      "install": {
+        "ok": true,
+        "command": "npm install @deepseek-ai/cordis@4.0.5 @deepseek-ai/dsh-workspace@0.2.1-rc.5 @deepseek-ai/dsh-client-connection@0.2.1-rc.5 @deepseek-ai/dsh-client-ui-workspace@0.2.1-rc.5 --no-save --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org",
+        "cwd": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.1-rc.5",
+        "exitCode": 0,
+        "timedOut": false,
+        "timeoutMs": 240000,
+        "durationMs": 43389,
+        "stderrTail": [],
+        "installed": {
+          "@deepseek-ai/cordis": "4.0.5",
+          "@deepseek-ai/dsh-workspace": "0.2.1-rc.5",
+          "@deepseek-ai/dsh-client-connection": "0.2.1-rc.5",
+          "@deepseek-ai/dsh-client-ui-workspace": "0.2.1-rc.5"
+        }
+      },
+      "tests": {
+        "ok": true,
+        "command": "/opt/homebrew/Cellar/node/23.11.0/bin/node --test --test-reporter=tap test/composition.test.mjs",
+        "cwd": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.1-rc.5",
+        "exitCode": 0,
+        "timedOut": false,
+        "timeoutMs": 120000,
+        "durationMs": 154,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "skipped": 0,
+        "failedTests": [],
+        "stderrTail": [],
+        "stdoutTail": [
+          "ok 7 - a host without the durable reorder API degrades to a clear message, not a crash",
+          "  ---",
+          "  duration_ms: 1.645209",
+          "  type: 'test'",
+          "  ...",
+          "# Subtest: a rejected durable write is reported as write-failed with the host message",
+          "ok 8 - a rejected durable write is reported as write-failed with the host message",
+          "  ---",
+          "  duration_ms: 2.221959",
+          "  type: 'test'",
+          "  ...",
+          "1..8",
+          "# tests 8",
+          "# suites 0",
+          "# pass 8",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 107.48525"
+        ]
+      },
+      "structuredMenu": {
+        "available": false,
+        "status": "missing-api",
+        "reason": "@deepseek-ai/dsh-client-ui-workspace@0.2.1-rc.5/lib/client.js lacks contextMenus.register(, target: \"workspace\", target: \"session\"",
+        "package": "@deepseek-ai/dsh-client-ui-workspace",
+        "version": "0.2.1-rc.5",
+        "method": "plain-HTTP registry lookup + published tarball, inspect package/lib/client.js",
+        "tarball": "https://registry.npmjs.org/@deepseek-ai/dsh-client-ui-workspace/-/dsh-client-ui-workspace-0.2.1-rc.5.tgz",
+        "clientBytes": 231234,
+        "checks": {
+          "contextMenusRegister": false,
+          "workspaceTarget": false,
+          "sessionTarget": false,
+          "workspaceTargetLiteral": false,
+          "sessionTargetLiteral": false
+        },
+        "evidence": {
+          "contextMenusRegister": [],
+          "workspaceTarget": [],
+          "sessionTarget": []
+        },
+        "errors": []
+      },
+      "verdict": "pass",
+      "failures": [],
+      "warnings": [],
+      "hostPackages": {
+        "published": [
+          "@deepseek-ai/dsh-workspace",
+          "@deepseek-ai/dsh-client-connection",
+          "@deepseek-ai/dsh-client-ui-workspace"
+        ],
+        "unavailable": [],
+        "registryErrors": [],
+        "cordisPeerRanges": [
+          {
+            "name": "@deepseek-ai/dsh-workspace",
+            "range": "~4.0.5",
+            "version": "4.0.5"
+          },
+          {
+            "name": "@deepseek-ai/dsh-client-connection",
+            "range": "~4.0.5",
+            "version": "4.0.5"
+          },
+          {
+            "name": "@deepseek-ai/dsh-client-ui-workspace",
+            "range": "~4.0.5",
+            "version": "4.0.5"
+          }
+        ]
+      },
+      "tempDir": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.1-rc.5",
+      "durationMs": 49958
+    },
+    {
+      "host": "0.2.2-rc.1",
+      "cordis": "4.1.0",
+      "declared": {
+        "source": "engines.dsh",
+        "host": "0.2.2-rc.1",
+        "satisfied": true,
+        "requirements": [
+          {
+            "name": "dsh",
+            "range": ">=0.2.1-rc.5",
+            "field": "engines.dsh",
+            "satisfied": true
+          }
+        ],
+        "reason": null
+      },
+      "install": {
+        "ok": true,
+        "command": "npm install @deepseek-ai/cordis@4.1.0 @deepseek-ai/dsh-workspace@0.2.2-rc.1 @deepseek-ai/dsh-client-connection@0.2.2-rc.1 @deepseek-ai/dsh-client-ui-workspace@0.2.2-rc.1 --no-save --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org",
+        "cwd": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.2-rc.1",
+        "exitCode": 0,
+        "timedOut": false,
+        "timeoutMs": 240000,
+        "durationMs": 4950,
+        "stderrTail": [],
+        "installed": {
+          "@deepseek-ai/cordis": "4.1.0",
+          "@deepseek-ai/dsh-workspace": "0.2.2-rc.1",
+          "@deepseek-ai/dsh-client-connection": "0.2.2-rc.1",
+          "@deepseek-ai/dsh-client-ui-workspace": "0.2.2-rc.1"
+        }
+      },
+      "tests": {
+        "ok": true,
+        "command": "/opt/homebrew/Cellar/node/23.11.0/bin/node --test --test-reporter=tap test/composition.test.mjs",
+        "cwd": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.2-rc.1",
+        "exitCode": 0,
+        "timedOut": false,
+        "timeoutMs": 120000,
+        "durationMs": 148,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "skipped": 0,
+        "failedTests": [],
+        "stderrTail": [],
+        "stdoutTail": [
+          "ok 7 - a host without the durable reorder API degrades to a clear message, not a crash",
+          "  ---",
+          "  duration_ms: 1.403333",
+          "  type: 'test'",
+          "  ...",
+          "# Subtest: a rejected durable write is reported as write-failed with the host message",
+          "ok 8 - a rejected durable write is reported as write-failed with the host message",
+          "  ---",
+          "  duration_ms: 1.076708",
+          "  type: 'test'",
+          "  ...",
+          "1..8",
+          "# tests 8",
+          "# suites 0",
+          "# pass 8",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 96.995167"
+        ]
+      },
+      "structuredMenu": {
+        "available": true,
+        "status": "available",
+        "reason": null,
+        "package": "@deepseek-ai/dsh-client-ui-workspace",
+        "version": "0.2.2-rc.1",
+        "method": "plain-HTTP registry lookup + published tarball, inspect package/lib/client.js",
+        "tarball": "https://registry.npmjs.org/@deepseek-ai/dsh-client-ui-workspace/-/dsh-client-ui-workspace-0.2.2-rc.1.tgz",
+        "clientBytes": 277612,
+        "checks": {
+          "contextMenusRegister": true,
+          "workspaceTarget": true,
+          "sessionTarget": true,
+          "workspaceTargetLiteral": true,
+          "sessionTargetLiteral": true
+        },
+        "evidence": {
+          "contextMenusRegister": [
+            "pace\"); const register = (id, order, endpoints, resolve) => { ctx.effect(() => ctx.contextMenus.register({ id: `session.${id}`, target: \"session\", order, observe: ({ sessionId"
+          ],
+          "workspaceTarget": [
+            "); }); ctx.effect(() => ctx.contextMenus.register({ id: \"workspace.rename\", target: \"workspace\", order: 100, resolve: ({ workspaceId, displayTitle }) => ctx.remoteAccess.source("
+          ],
+          "sessionTarget": [
+            "lve) => { ctx.effect(() => ctx.contextMenus.register({ id: `session.${id}`, target: \"session\", order, observe: ({ sessionId }) => [ ctx.workspaces.list, ctx.loca"
+          ]
+        },
+        "errors": []
+      },
+      "verdict": "pass",
+      "failures": [],
+      "warnings": [],
+      "hostPackages": {
+        "published": [
+          "@deepseek-ai/dsh-workspace",
+          "@deepseek-ai/dsh-client-connection",
+          "@deepseek-ai/dsh-client-ui-workspace"
+        ],
+        "unavailable": [],
+        "registryErrors": [],
+        "cordisPeerRanges": [
+          {
+            "name": "@deepseek-ai/dsh-workspace",
+            "range": "~4.1.0",
+            "version": "4.1.0"
+          },
+          {
+            "name": "@deepseek-ai/dsh-client-connection",
+            "range": "~4.1.0",
+            "version": "4.1.0"
+          },
+          {
+            "name": "@deepseek-ai/dsh-client-ui-workspace",
+            "range": "~4.1.0",
+            "version": "4.1.0"
+          }
+        ]
+      },
+      "tempDir": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.2-rc.1",
+      "durationMs": 8138
+    },
+    {
+      "host": "0.2.2-rc.3",
+      "cordis": "4.1.0",
+      "declared": {
+        "source": "engines.dsh",
+        "host": "0.2.2-rc.3",
+        "satisfied": true,
+        "requirements": [
+          {
+            "name": "dsh",
+            "range": ">=0.2.1-rc.5",
+            "field": "engines.dsh",
+            "satisfied": true
+          }
+        ],
+        "reason": null
+      },
+      "install": {
+        "ok": true,
+        "command": "npm install @deepseek-ai/cordis@4.1.0 @deepseek-ai/dsh-workspace@0.2.2-rc.3 @deepseek-ai/dsh-client-connection@0.2.2-rc.3 @deepseek-ai/dsh-client-ui-workspace@0.2.2-rc.3 --no-save --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org",
+        "cwd": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.2-rc.3",
+        "exitCode": 0,
+        "timedOut": false,
+        "timeoutMs": 240000,
+        "durationMs": 6459,
+        "stderrTail": [],
+        "installed": {
+          "@deepseek-ai/cordis": "4.1.0",
+          "@deepseek-ai/dsh-workspace": "0.2.2-rc.3",
+          "@deepseek-ai/dsh-client-connection": "0.2.2-rc.3",
+          "@deepseek-ai/dsh-client-ui-workspace": "0.2.2-rc.3"
+        }
+      },
+      "tests": {
+        "ok": true,
+        "command": "/opt/homebrew/Cellar/node/23.11.0/bin/node --test --test-reporter=tap test/composition.test.mjs",
+        "cwd": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.2-rc.3",
+        "exitCode": 0,
+        "timedOut": false,
+        "timeoutMs": 120000,
+        "durationMs": 136,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "skipped": 0,
+        "failedTests": [],
+        "stderrTail": [],
+        "stdoutTail": [
+          "ok 7 - a host without the durable reorder API degrades to a clear message, not a crash",
+          "  ---",
+          "  duration_ms: 1.419417",
+          "  type: 'test'",
+          "  ...",
+          "# Subtest: a rejected durable write is reported as write-failed with the host message",
+          "ok 8 - a rejected durable write is reported as write-failed with the host message",
+          "  ---",
+          "  duration_ms: 1.106583",
+          "  type: 'test'",
+          "  ...",
+          "1..8",
+          "# tests 8",
+          "# suites 0",
+          "# pass 8",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# todo 0",
+          "# duration_ms 96.807042"
+        ]
+      },
+      "structuredMenu": {
+        "available": true,
+        "status": "available",
+        "reason": null,
+        "package": "@deepseek-ai/dsh-client-ui-workspace",
+        "version": "0.2.2-rc.3",
+        "method": "plain-HTTP registry lookup + published tarball, inspect package/lib/client.js",
+        "tarball": "https://registry.npmjs.org/@deepseek-ai/dsh-client-ui-workspace/-/dsh-client-ui-workspace-0.2.2-rc.3.tgz",
+        "clientBytes": 197659,
+        "checks": {
+          "contextMenusRegister": true,
+          "workspaceTarget": true,
+          "sessionTarget": true,
+          "workspaceTargetLiteral": false,
+          "sessionTargetLiteral": false
+        },
+        "evidence": {
+          "contextMenusRegister": [
+            "locale.bind(`workspace`);const register=(id,order,endpoints,resolve)=>{ctx.effect(()=>ctx.contextMenus.register({id:`session.${id}`,target:`session`,order,observe:({sessionId})=>[ctx.workspaces.list,ctx"
+          ],
+          "workspaceTarget": [
+            "xtMenu.icon`,key},Icon)});ctx.effect(()=>ctx.contextMenus.register({id:`workspace.rename`,target:`workspace`,order:100,resolve:({workspaceId,displayTitle})=>ctx.remoteAccess.source(`workspace`,works"
+          ],
+          "sessionTarget": [
+            "d,order,endpoints,resolve)=>{ctx.effect(()=>ctx.contextMenus.register({id:`session.${id}`,target:`session`,order,observe:({sessionId})=>[ctx.workspaces.list,ctx.locale,...endpoints.map(action=>ctx"
+          ]
+        },
+        "errors": []
+      },
+      "verdict": "pass",
+      "failures": [],
+      "warnings": [],
+      "hostPackages": {
+        "published": [
+          "@deepseek-ai/dsh-workspace",
+          "@deepseek-ai/dsh-client-connection",
+          "@deepseek-ai/dsh-client-ui-workspace"
+        ],
+        "unavailable": [],
+        "registryErrors": [],
+        "cordisPeerRanges": [
+          {
+            "name": "@deepseek-ai/dsh-workspace",
+            "range": "~4.1.0",
+            "version": "4.1.0"
+          },
+          {
+            "name": "@deepseek-ai/dsh-client-connection",
+            "range": "~4.1.0",
+            "version": "4.1.0"
+          },
+          {
+            "name": "@deepseek-ai/dsh-client-ui-workspace",
+            "range": "~4.1.0",
+            "version": "4.1.0"
+          }
+        ]
+      },
+      "tempDir": "/var/folders/m4/bkw01zbj5j31s4_jc1pxtq9w0000gn/T/dsh-compat-matrix-hTBWi4/host-0.2.2-rc.3",
+      "durationMs": 11146
+    }
+  ],
+  "selfCheck": null,
+  "reportPath": "/Users/dosen8618607105700/code/dsh-move-up排第一的dsh的插件/reports/compat-2026-11-17.json",
+  "tempDirsKept": null,
+  "ok": true,
+  "checks": {
+    "allInstalled": true,
+    "allTestsPassed": true,
+    "declaredSatisfied": true
+  }
+}
