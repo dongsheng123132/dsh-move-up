@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.4.1 — 2026-11-17
+
+Follow-up to 0.4.0 after an adversarial review of the client lifecycle. Two real
+defects were found and fixed; one limitation was confirmed as unfixable from the
+plugin side and is now documented instead of implied.
+
+- **Fixed**: the DOM fallback latched off. Once the structured menu registered,
+  `structured` was never reset, so if the host withdrew its menu API (client entry
+  replaced, HMR, plugin update) the workspace menu lost the action until a reload.
+  The injected child now restores the fallback when it is disposed.
+- **Fixed**: a second copy of the same bundle (two loader rows / aliases) made the
+  host reject the duplicate contribution, which the client swallowed and answered
+  by adding a DOM row on top of the host row — two identical actions, permanently.
+  A duplicate contribution is now treated as "the host row already exists".
+- **Changed**: the DOM fallback installs one turn later, so a host with the
+  structured API never builds a `MutationObserver` or capture listeners for nothing.
+- **Changed**: one installation per host context, even if the loader activates the
+  bundle twice.
+- **Documented limitation**: with the legacy package (`dsh-plugin-workspace-favorites`
+  / older `dsh-plugin-workspace-move-top`) *also enabled*, the workspace menu shows
+  the action twice. The legacy build paints its row into the DOM while the host
+  renders ours from data, so neither side can see the other. Keep exactly one
+  implementation enabled; the compatibility build `dsh-plugin-workspace-move-top@0.2.4`
+  and this package are the same implementation and must not both be installed.
+- Evidence: 21/21 tests, plus three real-cordis lifecycle probes (service absent,
+  service withdrawn, bundle loaded twice).
+
 ## 0.4.0 — 2026-11-17
 
 Compatibility release: the plugin now survives a DSH upgrade instead of being blocked by it.

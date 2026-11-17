@@ -94,4 +94,4 @@ If the structured backend disappears in a future host, the DOM fallback still sh
 - Verified on macOS (Apple Silicon) desktop builds. Windows and Linux desktop builds have not been exercised.
 - The DOM fallback depends on the sidebar markup. It is tolerant, but a host that renames every attribute would leave only the structured backend.
 - A menu shows the action even when the workspace is already first; the server then answers `moved: false` and the UI reports “already at the top” instead of writing.
-- Do not run this plugin next to `dsh-plugin-workspace-move-top` or `dsh-plugin-workspace-favorites`: both add the same row under a different attribute, so the menu would show the action twice.
+- **Keep exactly one implementation enabled.** `dsh-plugin-workspace-favorites` and the pre-0.2.3 `dsh-plugin-workspace-move-top` paint their row into the menu DOM, while this package (and its compatibility build from 0.2.4) registers a data contribution the host renders. Neither side can see the other, so with two of them enabled the menu really does show the action twice. The plugin cannot dedupe this from the client; the install has to.

@@ -389,6 +389,9 @@ function mount(t, { response, menus, dom = true } = {}) {
   const mod = loadClient({ document, MutationObserver: FakeMutationObserver, fetch: fakeFetch.fetch, setTimeout: timers.setTimeout, clearTimeout: timers.clearTimeout })
   const ctx = createCtx({ menus })
   mod.apply(ctx)
+  // The client defers the DOM fallback by one turn so a structured registration
+  // that lands first never builds an observer. Run that turn now.
+  timers.flush()
   t.after(() => { ctx.disposers.forEach((dispose) => dispose()); delete global.Element; delete global.KeyboardEvent })
   return { document, timers, fakeFetch, ctx, mod, dom }
 }
@@ -539,6 +542,7 @@ test('degradation: a throwing contextMenus registration keeps the DOM fallback w
     },
   }
   mod.apply(ctx)
+  timers.flush()
   const menu = openWorkspaceMenu(document, 'ws-1')
   timers.flush()
   assert.equal(menu.querySelectorAll('[data-move-up]').length, 1)
@@ -590,6 +594,7 @@ test('degradation: a host context without inject() still gets the DOM backend', 
   FakeMutationObserver.instances = []
   const mod = loadClient({ document, MutationObserver: FakeMutationObserver, fetch: fakeFetch.fetch, setTimeout: timers.setTimeout, clearTimeout: timers.clearTimeout })
   mod.apply({ effect(callback) { return callback() } })
+  timers.flush()
   const menu = openWorkspaceMenu(document, 'ws-1')
   timers.flush()
   assert.equal(menu.querySelectorAll('[data-move-up]').length, 1)
