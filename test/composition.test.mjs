@@ -131,3 +131,50 @@ test('legacy corrupted pins.json is never read or written', async t => {
   await service.moveToTop('zzz')
   assert.equal(await readFile(pinsPath, 'utf8'), '{bad', 'failed move never rewrites the legacy pins file')
 })
+
+// ---------------------------------------------------------------- //
+// Host capability degradation
+// ---------------------------------------------------------------- //
+
+/** A registry that can list but cannot reorder: what a future/older host that
+ * renames the durable write would look like to this plugin. */
+class ListOnlyRegistry extends Service {
+  constructor(ctx, initial) {
+    super(ctx, 'workspaceRegistry')
+    this.items = (initial ?? ['a', 'b', 'c']).map(id => ({ id, path: `/projects/${id}`, title: 'same' }))
+  }
+  list() { return [...this.items] }
+}
+
+/** A registry whose durable write rejects (storage fault). */
+class RejectingRegistry extends Registry {
+  async insertBefore() { throw new Error('storage is read-only') }
+}
+
+async function bootWith(t, RegistryClass) {
+  const ctx = new Context()
+  t.after(async () => { await ctx.registry.delete(plugin) })
+  await ctx.plugin({ name: 'registry-fixture', apply(scope) { new RegistryClass(scope) } })
+  await ctx.plugin(plugin)
+  return { ctx, registry: ctx.workspaceRegistry, service: ctx.moveUpWorkspace }
+}
+
+test('a host without the durable reorder API degrades to a clear message, not a crash', async t => {
+  const { registry, service } = await bootWith(t, ListOnlyRegistry)
+  const result = await service.moveToTop('c')
+  assert.equal(result.ok, false)
+  assert.equal(result.reason, 'unsupported-host')
+  assert.match(result.message, /不支持|没有工作区注册表/)
+  assert.deepEqual(registry.list().map(e => e.id), ['a', 'b', 'c'], 'nothing was reordered')
+  assert.equal((await handleMoveRequest(service, post({ workspaceId: 'c', action: 'move-to-top' }))).status, 501)
+})
+
+test('a rejected durable write is reported as write-failed with the host message', async t => {
+  const { registry, service } = await bootWith(t, RejectingRegistry)
+  const result = await service.moveToTop('c')
+  assert.equal(result.ok, false)
+  assert.equal(result.reason, 'write-failed')
+  assert.match(result.message, /storage is read-only/)
+  assert.deepEqual(registry.list().map(e => e.id), ['a', 'b', 'c'], 'order is unchanged after a rejected write')
+  assert.equal((await handleMoveRequest(service, post({ workspaceId: 'c', action: 'move-to-top' }))).status, 500)
+})

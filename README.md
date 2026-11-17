@@ -1,41 +1,68 @@
 # Move Up
 
-[中文说明](README.zh-CN.md)
+[中文说明](README.zh-CN.md) · [Compatibility](COMPATIBILITY.md) · [Changelog](CHANGELOG.md)
 
-Add **Move to top** to a DSH workspace's `…` menu. One click performs one reorder through the host's official `workspaceRegistry.insertBefore` API, just like a long manual drag.
+Adds **Move to top** to a DeepSeek Harness workspace's `…` menu. One click performs one reorder through the host's own `workspaceRegistry.insertBefore` API — the same durable write a long manual drag uses.
 
-- One action only: no stars, favorites, pinned categories, or automatic reordering.
-- 7 KB npm package, no runtime dependencies, no saved state, no background work. If you never click it, nothing happens.
-- Manual dragging remains yours; activation and synchronization never restore an old order.
+- **One action only.** No stars, favorites, pinned categories, startup re-sorting, or background work. If you never click it, nothing happens.
+- **No state, no dependencies, no data collection.** The package ships a server half and a client half; neither writes a file.
+- **Manual dragging stays yours.** Moving a workspace once never fights a later drag.
 
 ## Install
 
-```sh
-dsh plugin --profile desktop add dsh-move-up@0.2.1
+In the DSH desktop app: **Settings → Plugins → Add plugin**, then enter:
+
+```text
+dsh-move-up@0.4.0
 ```
+
+For a headless or CLI-managed profile:
+
+```sh
+dsh plugin --profile <profile> add dsh-move-up@0.4.0
+```
+
+### Upgrading from an older package name
+
+This feature was published under two older names before it had its own repository:
+
+| Old package | Status |
+| --- | --- |
+| `dsh-plugin-workspace-move-top` | same feature, superseded (deprecated in favour of `dsh-move-up`) |
+| `dsh-plugin-workspace-favorites` | misleading name: it never had favorites or pins, it also only moved a workspace to the top; superseded |
+
+Remove the old plugin **before** adding `dsh-move-up`, otherwise both implementations add a row and the menu shows the action twice. To roll back, remove `dsh-move-up` and re-add the old package — nothing else on disk is touched.
+
+## Compatibility policy
+
+The package declares one requirement, `engines.dsh: ">=0.2.1-rc.5"` — a **lower** bound only, so a DSH upgrade never blocks the plugin from loading. Two client backends are picked at runtime:
+
+1. **Structured menu** (`ctx.contextMenus.register({ target: 'workspace' })`) — the same public client API the built-in Rename/Delete workspace actions use. Available on DSH ≥ 0.2.2; the host renders the row, handles keyboard navigation, closes the menu and reports failures.
+2. **DOM fallback** — decorates the rendered workspace menu on hosts without that API, with tolerant selectors and a duplicate guard.
+
+If a future host moves an API, the plugin degrades to a readable error in the UI instead of breaking the client entry or reordering anything on its own. The tested window, the evidence and the five-minute upgrade runbook live in [COMPATIBILITY.md](COMPATIBILITY.md).
+
+Menu copy is localized for the eight host locales (`zh`, `en`, `ja`, `es`, `fr`, `de`, `ru`, `pt`) and falls back to English.
 
 ## Add it to DSH Discover (optional)
 
-DSH 0.2.2 ships an experimental plugin market with a Discover tab. It has no official catalog; Discover lists only the index sources a user adds. This repository is one:
+DSH's experimental plugin market ships no official catalog: Discover lists only index sources a user adds. This repository is one:
 
 ```text
 https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/plugin-index.json
 ```
 
-Open **Plugins → Discover → Add index source**, paste the URL, then search for `move-top`. Installing from Discover still goes through the normal plugin confirmation and npm.
+Open **Plugins → Discover → Add index source**, paste the URL, then search for `Move Up`. Installing from Discover still goes through the normal plugin confirmation and npm.
 
-## Compatibility and limits
-
-Tested with **DSH 0.2.1-rc.5 on macOS**. This release targets that exact host version. Menu copy follows the browser language: Chinese or English.
-
-The host has no workspace-menu extension slot, so the client uses the current workspace-row and menu DOM. If a future host changes that structure, the action may disappear. It must not reorder workspaces on its own. Windows and non-empty session-menu browser behavior have not been verified.
-
-## Verify
+## Verify locally
 
 ```sh
 npm ci
-npm run check
+npm run check          # typecheck + build + 21 tests
+npm run compat:matrix  # installs real host versions and re-runs the composition suite
 ```
+
+`npm run check` proves the server composition, the client structured path and the DOM fallback. It is not a click-through of the desktop GUI; that is what the installer verifies.
 
 ## License
 

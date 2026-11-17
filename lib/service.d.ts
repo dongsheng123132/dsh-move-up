@@ -20,10 +20,13 @@ export interface MoveToTopResult {
     readonly order: readonly string[];
     readonly workspaces: readonly WorkspaceEntryView[];
 }
-/** Failure result for an empty registry or an unknown workspace. */
+/** Why a move could not be performed. */
+export type MoveToTopFailure = 'none' | 'unsupported-host' | 'write-failed';
+/** Failure result for an empty registry, an unknown workspace, a host whose
+ * registry API is missing, or a rejected durable write. */
 export interface MoveToTopError {
     readonly ok: false;
-    readonly reason: 'none';
+    readonly reason: MoveToTopFailure;
     readonly message: string;
 }
 /** Stateless "move to top" service. Owns the registry ordering queue but no
@@ -33,6 +36,7 @@ export declare class MoveUpService extends Service {
     private queue;
     constructor(ctx: Context);
     private enqueue;
+    private registry;
     private list;
     /** Move one workspace to the top of the durable display order, exactly once.
      *
@@ -41,6 +45,10 @@ export declare class MoveUpService extends Service {
      * the host for `insertBefore(id, firstId)` — the same durable write the
      * official sidebar drag uses — so the result survives restart and no plugin
      * startup pass re-applies it.
+     *
+     * Every host capability is checked at call time and reported as data, so a
+     * host upgrade that renames or drops the registry write surfaces as a clear
+     * message instead of an unhandled plugin error.
      * @param workspaceId exact registry ID
      */
     moveToTop(workspaceId: string): Promise<MoveToTopResult | MoveToTopError>;
