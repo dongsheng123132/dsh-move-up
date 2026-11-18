@@ -31,7 +31,7 @@ const HERE = dirname(fileURLToPath(import.meta.url))
 const REPO = dirname(HERE)
 const OUT = join(REPO, 'dist-mirror')
 const MIRROR_NAME = 'dsh-plugin-workspace-move-top'
-const MIRROR_VERSION = '0.2.6'
+const MIRROR_VERSION = '0.2.7'
 const REGISTRY = 'https://registry.npmjs.org'
 
 const args = new Set(process.argv.slice(2))

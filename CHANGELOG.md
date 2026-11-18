@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.4 — 2026-11-18
+
+Documentation/privacy release; no behaviour change.
+
+- Removed two full-app screenshots from the README (macOS menu, Windows desktop). They
+  showed real workspace names and chat content. The hero image keeps the real menu with
+  the workspace list masked.
+- No code, manifest, or dependency changes. Everything documented for 0.4.3 still applies.
+
 ## 0.4.3 — 2026-11-18
 
 Cleanup release after a five-model review (codex-luna, codex-sol, claude-haiku,
