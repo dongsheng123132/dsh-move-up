@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.5 — 2026-11-18
+
+Install-robustness release; same behaviour.
+
+- Host packages (`cordis`, `dsh-workspace`, `dsh-client-connection`) are now optional
+  peers. Installing the package standalone no longer pulls or resolves the host
+  packages, which is what made sandboxed/source-channel installs fail. The plugin
+  already checks those capabilities at runtime and reports a readable error.
+- README: badges (npm version/downloads, tested DSH range, license, dsh.so risk).
+
 ## 0.4.4 — 2026-11-18
 
 Documentation/privacy release; no behaviour change.

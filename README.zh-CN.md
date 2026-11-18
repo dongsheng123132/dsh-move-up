@@ -1,5 +1,13 @@
 # Move Up · 移到最上面
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/dsh-move-up"><img alt="npm version" src="https://img.shields.io/npm/v/dsh-move-up"></a>
+  <a href="https://www.npmjs.com/package/dsh-move-up"><img alt="npm downloads" src="https://img.shields.io/npm/dm/dsh-move-up"></a>
+  <img alt="DSH tested 0.2.1-rc.5 - 0.2.2-rc.3" src="https://img.shields.io/badge/DSH_tested-0.2.1--rc.5%20%E2%86%92%200.2.2--rc.3-4c8dff">
+  <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg">
+  <a href="https://www.dsh.so/artifact/dsh-move-up/"><img alt="dsh.so risk: low" src="https://cdn.dsh.so/badge/dsh-move-up.svg"></a>
+</p>
+
 **中文** · [English](README.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Português](README.pt.md)
 
 ![Move Up：工作区菜单里的「移到最上面」](https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/docs/promo-zh.png)
