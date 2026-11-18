@@ -12,10 +12,16 @@ Adds **Move to top** to a DeepSeek Harness workspace's `…` menu. One click per
 
 ![Move to top in the workspace menu](https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/docs/screenshot-menu.png)
 
-Checked against the real web UI (macOS, DSH `0.2.2-rc.1`, structured context-menu backend):
-the row renders above **Rename** in a workspace's `…` menu; clicking it on the 4th workspace
-moved it to first (toast *Moved to top*) and the durable order in storage changed; clicking it
-on the workspace that was already first reported *Already at the top* and wrote nothing.
+Checked against the real web UI and the real Windows desktop app, both on the structured
+context-menu backend:
+
+- macOS, DSH `0.2.2-rc.1` web: the row renders above **Rename**; clicking it on the 4th workspace
+  moved it to first (toast *Moved to top*) and the durable order in storage changed; clicking it
+  on the workspace that was already first reported *Already at the top* and wrote nothing.
+- Windows 11, DSH desktop `0.2.2-rc.3` (Electron): same row, same behaviour — the 3rd workspace
+  moved to first with the *Moved to top* toast, and `storages/workspace.json` listed it first.
+
+![Move to top in the Windows desktop app](https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/docs/screenshot-windows.png)
 
 ## Install
 

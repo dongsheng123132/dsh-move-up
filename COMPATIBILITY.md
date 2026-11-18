@@ -83,7 +83,19 @@ Non-unit evidence gathered by driving the real web UI with a headless Chrome ses
 | durable write | `storages/workspace.json` `workspaceIds[0]` became the moved id |
 | click on the first workspace | toast `已经在最上面`, no write |
 
-Host: DSH `0.2.2-rc.1` web profile, macOS. Still not exercised: the Electron desktop shell itself, Windows GUI, Linux.
+Host: DSH `0.2.2-rc.1` web profile, macOS.
+
+### 4. Real Windows desktop app
+
+Same driving method (CDP into the Electron renderer), Windows 11, DSH desktop `0.2.2-rc.3`, plugin `0.4.1` installed into the profile with the app's own pnpm:
+
+| Step | Observed |
+| --- | --- |
+| workspace `…` menu | `移到最上面` first, above `重命名` / `在文件夹显示` / `删除工作区` |
+| click on the 3rd workspace | order `321b…,f497…,c186…` → `c186…,321b…,f497…`; toast `已移到最上面` |
+| durable write | `storages/workspace.json` `workspaceIds[0]` = the moved id |
+
+Still not exercised: Linux, and the desktop shell's own update flow.
 
 ## Upgrade runbook (when a new DSH version ships)
 
