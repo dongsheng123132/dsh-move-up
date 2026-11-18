@@ -302,7 +302,14 @@ function createFetch() {
 // Bundle loader
 // ---------------------------------------------------------------- //
 
-function loadClient(deps) {
+/** Minimal React stand-in: the bundle only needs createElement for the glyph. */
+const fakeReact = {
+  createElement(tag, props, ...children) {
+    return { tag, props, children }
+  },
+}
+
+function loadClient(deps, requireImpl) {
   const source = readFileSync(CLIENT_URL, 'utf8')
   const runner = new Function(
     'window',
@@ -333,7 +340,7 @@ function loadClient(deps) {
   )
   const spec = registry['dsh-move-up']
   assert.ok(spec, 'bundle registers under the wrapper id dsh-move-up')
-  const mod = spec.factory(function require() {
+  const mod = spec.factory(requireImpl || function require() {
     throw new Error('client bundle must not require any module')
   })
   assert.equal(typeof mod.apply, 'function', 'bundle exports apply(ctx)')
@@ -341,7 +348,7 @@ function loadClient(deps) {
 }
 
 /** Host context: cordis effect() plus, on hosts that have it, ctx.inject(). */
-function createCtx({ menus } = {}) {
+function createCtx({ menus, slots = true } = {}) {
   const disposers = []
   const contributions = []
   const notifications = []
@@ -364,10 +371,23 @@ function createCtx({ menus } = {}) {
       },
     },
   }
+  const iconSlots = []
+  if (slots) {
+    scope.slots = {
+      inject(name, factory) {
+        if (name !== 'contextMenu.icon') return
+        for (const registration of factory()) iconSlots.push(registration)
+      },
+      register(spec, component) {
+        return { spec, component }
+      },
+    }
+  }
   const ctx = {
     disposers,
     contributions,
     notifications,
+    iconSlots,
     effect: scope.effect,
     inject(names, callback) {
       if (!Array.isArray(names) || !names.includes('contextMenus')) return
@@ -378,7 +398,7 @@ function createCtx({ menus } = {}) {
   return ctx
 }
 
-function mount(t, { response, menus, dom = true } = {}) {
+function mount(t, { response, menus, slots = true } = {}) {
   global.Element = FakeElement
   global.KeyboardEvent = class { constructor(type, init) { this.type = type; Object.assign(this, init) } }
   const document = createDocument()
@@ -386,14 +406,17 @@ function mount(t, { response, menus, dom = true } = {}) {
   const fakeFetch = createFetch()
   if (response) fakeFetch.respond(response)
   FakeMutationObserver.instances = []
-  const mod = loadClient({ document, MutationObserver: FakeMutationObserver, fetch: fakeFetch.fetch, setTimeout: timers.setTimeout, clearTimeout: timers.clearTimeout })
-  const ctx = createCtx({ menus })
+  const mod = loadClient({ document, MutationObserver: FakeMutationObserver, fetch: fakeFetch.fetch, setTimeout: timers.setTimeout, clearTimeout: timers.clearTimeout }, (name) => {
+    if (name === 'react') return fakeReact
+    throw new Error(`unexpected require: ${name}`)
+  })
+  const ctx = createCtx({ menus, slots })
   mod.apply(ctx)
   // The client defers the DOM fallback by one turn so a structured registration
   // that lands first never builds an observer. Run that turn now.
   timers.flush()
   t.after(() => { ctx.disposers.forEach((dispose) => dispose()); delete global.Element; delete global.KeyboardEvent })
-  return { document, timers, fakeFetch, ctx, mod, dom }
+  return { document, timers, fakeFetch, ctx, mod }
 }
 
 // ---------------------------------------------------------------- //
@@ -497,6 +520,21 @@ test('structured: registers one workspace data contribution and renders no DOM r
   assert.equal(actions[0].failureLabel, '调整失败，请重试。')
   assert.deepEqual(contribution.resolve({}), [], 'a target without an id yields no action')
   assert.deepEqual(contribution.resolve({ workspaceId: '' }), [], 'an empty id yields no action')
+})
+
+test('structured: contributes an up-arrow glyph and declares its icon key', (t) => {
+  const { ctx } = mount(t, { menus: {} })
+  assert.equal(ctx.iconSlots.length, 1, 'one keyed contextMenu.icon registration')
+  const registration = ctx.iconSlots[0]
+  assert.equal(registration.spec.name, 'contextMenu.icon')
+  assert.equal(registration.spec.key, 'workspace.move-up')
+  const element = registration.component({ icon: { key: 'workspace.move-up' } })
+  assert.equal(element.tag, 'svg')
+  assert.equal(element.props.stroke, 'currentColor')
+  const paths = element.children.filter(child => child && child.tag === 'path')
+  assert.equal(paths.length, 2, 'shaft + chevron')
+  const [action] = ctx.contributions[0].resolve({ workspaceId: 'ws-1' })
+  assert.deepEqual(action.icon, { key: 'workspace.move-up' })
 })
 
 test('structured: run posts the captured workspace id and notifies success', async (t) => {

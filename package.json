@@ -1,6 +1,6 @@
 {
   "name": "dsh-move-up",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Move a workspace to the top of the DeepSeek Harness sidebar once, from its menu. No favorites, pins, stars, or automatic reordering. No runtime dependencies, no saved state.",
   "license": "MIT",
   "type": "module",

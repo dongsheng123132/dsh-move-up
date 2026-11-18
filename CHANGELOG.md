@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.2 — 2026-11-18
+
+- **The structured row now has a glyph.** 0.4.x rendered a label-only row, so on
+  hosts with the structured menu the action looked different from the legacy
+  build, which painted its own `↑`. The client now registers a
+  `contextMenu.icon` keyed slot (`workspace.move-up`, a 14 px up arrow drawn with
+  `currentColor`) and attaches `icon: { key }` to the contribution — the same
+  mechanism the built-in Rename/Delete actions use. When `react` is not available
+  the row simply stays label-only instead of failing.
+
 ## 0.4.1 — 2026-11-17
 
 Follow-up to 0.4.0 after an adversarial review of the client lifecycle. Two real

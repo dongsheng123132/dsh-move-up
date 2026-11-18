@@ -46,6 +46,24 @@ window.__ModuleLoader__.load({
     // One installation per host context, even if the loader activates the bundle twice.
     var INSTALLED = typeof WeakSet === 'function' ? new WeakSet() : null
 
+    // The host renders a structured menu row from data; its glyph comes from the
+    // `contextMenu.icon` keyed slot. React is a host-provided module here (the
+    // same one the built-in menus use); when it is unavailable the row simply has
+    // no glyph, which is how 0.4.1 behaved.
+    var ICON_KEY = 'workspace.move-up'
+    var React = null
+    try { React = require('react') } catch (error) { React = null }
+    function MoveUpIcon() {
+      return React.createElement('svg', {
+        width: 14, height: 14, viewBox: '0 0 16 16', fill: 'none',
+        stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round',
+        'aria-hidden': 'true',
+      },
+        React.createElement('path', { d: 'M8 13V3.5' }),
+        React.createElement('path', { d: 'M3.5 8L8 3.5 12.5 8' }),
+      )
+    }
+
     /** POST one exact workspace id; resolves with the server result or rejects. */
     function moveWorkspace(workspaceId) {
       return fetch(API_PATH, {
@@ -69,10 +87,17 @@ window.__ModuleLoader__.load({
     function installStructuredMenu(ctx, onActive, onRetired, onDuplicate) {
       if (!ctx || typeof ctx.inject !== 'function') return 'absent'
       var status = 'absent'
-      var fiber = ctx.inject(['contextMenus'], function (scope) {
+      var fiber = ctx.inject(['contextMenus', 'slots'], function (scope) {
         try {
         var menus = scope.contextMenus
         if (!menus || typeof menus.register !== 'function') return
+        if (React && scope.slots && typeof scope.slots.inject === 'function') {
+          // Keyed glyph for the row this plugin contributes; the host dispatches
+          // it for ordinary, nested and footer actions.
+          scope.slots.inject('contextMenu.icon', function* () {
+            yield scope.slots.register({ name: 'contextMenu.icon', key: ICON_KEY }, MoveUpIcon)
+          })
+        }
         scope.effect(function () {
           var dispose = menus.register({
             id: 'workspace.move-up',
@@ -85,6 +110,7 @@ window.__ModuleLoader__.load({
                 id: 'move-up',
                 label: LABELS.menu,
                 failureLabel: LABELS.failed,
+                ...(React ? { icon: { key: ICON_KEY } } : {}),
                 run: function () {
                   return moveWorkspace(workspaceId).then(function (result) {
                     if (menus && typeof menus.notify === 'function') {

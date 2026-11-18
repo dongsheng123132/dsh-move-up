@@ -14,8 +14,8 @@
 
 在真实界面里点过，两个平台都是结构化菜单后端：
 
-- macOS，DSH `0.2.2-rc.1` Web：这一行出现在工作区 `…` 菜单的**重命名**上方；对排第 4 的 workspace 点一次，它变成第一，弹出「已移到最上面」，存储里的持久顺序也变了；对本来就在第一的 workspace 点，提示「已经在最上面」，不产生写入。
-- Windows 11，DSH 桌面版 `0.2.2-rc.3`（Electron）：同样的行、同样的行为 —— 排第 3 的 workspace 移到第一，弹出「已移到最上面」，`storages/workspace.json` 里它排到了第一位。
+- macOS，DSH `0.2.2-rc.1` Web：这一行带向上箭头，出现在工作区 `…` 菜单的**重命名**上方；对排第 4 的 workspace 点一次，它变成第一，弹出「已移到最上面」，存储里的持久顺序也变了；对本来就在第一的 workspace 点，提示「已经在最上面」，不产生写入。
+- Windows 11，DSH 桌面版 `0.2.2-rc.3`（Electron）：同样的行、同样的箭头 —— 排第 3 的 workspace 移到第一，弹出「已移到最上面」，`storages/workspace.json` 里它排到了第一位。
 
 ![Windows 桌面版里的「移到最上面」](https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/docs/screenshot-windows.png)
 
