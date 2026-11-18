@@ -1,6 +1,8 @@
 # Move Up
 
-[中文说明](README.zh-CN.md) · [Compatibility](COMPATIBILITY.md) · [Changelog](CHANGELOG.md)
+[中文](README.zh-CN.md) · **English** · [日本語](README.ja.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Português](README.pt.md)
+
+![Move Up: the Move to top row in the workspace menu](https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/docs/promo-en.png)
 
 Adds **Move to top** to a DeepSeek Harness workspace's `…` menu. One click performs one reorder through the host's own `workspaceRegistry.insertBefore` API — the same durable write a long manual drag uses.
 
@@ -74,7 +76,7 @@ Open **Plugins → Discover → Add index source**, paste the URL, then search f
 
 ```sh
 npm ci
-npm run check          # typecheck + build + 21 tests
+npm run check          # typecheck + build + 22 tests
 npm run compat:matrix  # installs real host versions and re-runs the composition suite
 ```
 

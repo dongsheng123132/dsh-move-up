@@ -1,6 +1,8 @@
 # Move Up · 移到最上面
 
-[English](README.md) · [兼容性](COMPATIBILITY.md) · [更新日志](CHANGELOG.md)
+**中文** · [English](README.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Русский](README.ru.md) · [Português](README.pt.md)
+
+![Move Up：工作区菜单里的「移到最上面」](https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/docs/promo-zh.png)
 
 在 DSH 工作区 `…` 菜单里加一项 **「移到最上面」**。点一次，通过宿主自己的 `workspaceRegistry.insertBefore` 接口完成一次排序 —— 和手动长距离拖动落盘的是同一个写入。
 
@@ -69,7 +71,7 @@ https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/plugin-index.
 
 ```sh
 npm ci
-npm run check          # 类型检查 + 构建 + 21 个测试
+npm run check          # 类型检查 + 构建 + 22 个测试
 npm run compat:matrix  # 真装多个宿主版本，重跑组合测试
 ```
 
