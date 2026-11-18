@@ -8,6 +8,15 @@ Adds **Move to top** to a DeepSeek Harness workspace's `…` menu. One click per
 - **No state, no dependencies, no data collection.** The package ships a server half and a client half; neither writes a file.
 - **Manual dragging stays yours.** Moving a workspace once never fights a later drag.
 
+## Verified in a real browser
+
+![Move to top in the workspace menu](https://raw.githubusercontent.com/dongsheng123132/dsh-move-up/main/docs/screenshot-menu.png)
+
+Checked against the real web UI (macOS, DSH `0.2.2-rc.1`, structured context-menu backend):
+the row renders above **Rename** in a workspace's `…` menu; clicking it on the 4th workspace
+moved it to first (toast *Moved to top*) and the durable order in storage changed; clicking it
+on the workspace that was already first reported *Already at the top* and wrote nothing.
+
 ## Install
 
 In the DSH desktop app: **Settings → Plugins → Add plugin**, then enter:

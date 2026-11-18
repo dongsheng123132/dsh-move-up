@@ -70,7 +70,20 @@ That row is the bug this release fixes: the published 0.3.0 could not be install
 Run `node scripts/compat-matrix.mjs` (69.7 s on this machine, exit 0). The committed evidence is [`reports/compat-2026-11-17.json`](reports/compat-2026-11-17.json); `--json` prints the same report to stdout. The script re-reads each installed host package's version, refuses a stale `lib/` (mtime of `src/` vs `lib/`), and fails on anything other than HTTP 200/404 from the registry instead of guessing.
 <!-- MATRIX:END -->
 
-What the matrix does **not** do: it does not click through the desktop GUI. It proves the host contract, the plugin's activation and the durable reorder against real host packages; a human installing it in the desktop app is what closes the loop.
+What the matrix does **not** do: it does not click through the desktop GUI.
+
+### 3. Real browser, real host
+
+Non-unit evidence gathered by driving the real web UI with a headless Chrome session (CDP), against an isolated `DSH_HOME` with the published tarball installed:
+
+| Step | Observed |
+| --- | --- |
+| workspace `…` menu | `移到最上面` rendered first, above `重命名` / `在 Finder 中显示` / `删除工作区`; no `data-move-up` DOM marker, so the row came from the structured backend |
+| click on the 4th workspace | order `f84e…,ebfc…,bf5c…,b318…` → `b318…,f84e…,ebfc…,bf5c…`; toast `已移到最上面` |
+| durable write | `storages/workspace.json` `workspaceIds[0]` became the moved id |
+| click on the first workspace | toast `已经在最上面`, no write |
+
+Host: DSH `0.2.2-rc.1` web profile, macOS. Still not exercised: the Electron desktop shell itself, Windows GUI, Linux.
 
 ## Upgrade runbook (when a new DSH version ships)
 
