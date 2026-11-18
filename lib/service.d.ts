@@ -16,9 +16,8 @@ export interface MoveToTopResult {
     readonly ok: true;
     /** Whether an `insertBefore` actually moved the workspace. */
     readonly moved: boolean;
-    /** The complete durable order after the operation (top first). */
+    /** The durable order after the operation (top first). */
     readonly order: readonly string[];
-    readonly workspaces: readonly WorkspaceEntryView[];
 }
 /** Why a move could not be performed. */
 export type MoveToTopFailure = 'none' | 'unsupported-host' | 'write-failed';

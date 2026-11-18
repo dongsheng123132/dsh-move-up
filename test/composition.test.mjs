@@ -107,7 +107,6 @@ test('route accepts only move-to-top bodies and reports errors', async t => {
   const movedBody = await moved.json()
   assert.equal(movedBody.ok, true)
   assert.equal(movedBody.moved, true)
-  assert.deepEqual(movedBody.workspaces.map(w => w.id), ['c', 'a', 'b'])
   assert.deepEqual(registry.list().map(e => e.id), ['c', 'a', 'b'])
 
   for (const body of [[], null, {}, { workspaceId: '', action: 'move-to-top' }, { workspaceId: 'a' }, { workspaceId: 'a', action: 'pin' }, { action: 'move-to-top' }, { workspaceId: 1, action: 'move-to-top' }]) {

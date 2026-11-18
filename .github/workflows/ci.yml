@@ -46,9 +46,3 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
       - name: Install real host versions and re-run the composition suite
         run: npm run compat:matrix
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: compat-report
-          path: reports/
-          if-no-files-found: ignore

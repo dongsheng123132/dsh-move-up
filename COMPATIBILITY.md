@@ -43,7 +43,7 @@ Neither backend reorders anything by itself. Every click ends in one `insertBefo
 
 ## Verified matrix
 
-`npm run compat:matrix` installs the real host packages for each version into a throwaway directory, copies the built plugin into it and re-runs `test/composition.test.mjs` there. The JSON evidence lands in `reports/compat-<date>.json`.
+`npm run compat:matrix` installs the real host packages for each version into a throwaway directory, copies the built plugin into it and re-runs `test/composition.test.mjs` there, then prints one row per host.
 
 <!-- MATRIX:START -->
 ### 1. The host's own gate
@@ -67,7 +67,7 @@ That row is the bug this release fixes: the published 0.3.0 could not be install
 | 0.2.2-rc.1 | 4.1.0 | satisfied | ok | **8/8** | present | **PASS** |
 | 0.2.2-rc.3 | 4.1.0 | satisfied | ok | **8/8** | present | **PASS** |
 
-Run `node scripts/compat-matrix.mjs` (69.7 s on this machine, exit 0). The committed evidence is [`reports/compat-2026-11-17.json`](reports/compat-2026-11-17.json); `--json` prints the same report to stdout. The script re-reads each installed host package's version, refuses a stale `lib/` (mtime of `src/` vs `lib/`), and fails on anything other than HTTP 200/404 from the registry instead of guessing.
+Run `npm run compat:matrix` (about a minute; `--json` for machine output). The script installs the real `@deepseek-ai` packages for each host version into a throwaway tree, runs the same composition test there, and reports whether that host's client bundle carries the structured menu API. Registry answers other than 200/404 abort the run instead of being read as "not published".
 <!-- MATRIX:END -->
 
 What the matrix does **not** do: it does not click through the desktop GUI.

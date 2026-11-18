@@ -272,9 +272,10 @@ function createTimers() {
       return timers.size
     },
     flush() {
-      const ids = [...timers.keys()]
-      for (const id of ids) {
+      // A scheduled callback may clear another pending timer; skip what it removed.
+      for (const id of [...timers.keys()]) {
         const timer = timers.get(id)
+        if (!timer) continue
         timers.delete(id)
         timer.fn()
       }

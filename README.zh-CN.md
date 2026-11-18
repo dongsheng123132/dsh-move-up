@@ -24,13 +24,13 @@
 DSH 桌面版：**设置 → 插件 → 添加插件**，输入：
 
 ```text
-dsh-move-up@0.4.0
+dsh-move-up@0.4.3
 ```
 
 headless 或 CLI 管理的 profile：
 
 ```sh
-dsh plugin --profile <profile> add dsh-move-up@0.4.0
+dsh plugin --profile <profile> add dsh-move-up@0.4.3
 ```
 
 ### 从旧包名迁移

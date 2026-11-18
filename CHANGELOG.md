@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.4.3 — 2026-11-18
+
+Cleanup release after a five-model review (codex-luna, codex-sol, claude-haiku,
+glm-flash, deepseek-flash). Same feature, less code, fewer moving parts.
+
+- **Removed duplicated code.** `buildItem`, `decorate` and `menuBelongsToWorkspace`
+  had each been defined twice inside the DOM backend after earlier patching; only
+  the later copy ever ran. Client is now 294 lines (was 461) with one definition
+  of everything.
+- **Backend chosen once.** The runtime two-way switch (structured → DOM and back)
+  is gone; the structured backend still retires the DOM fallback when it registers,
+  but a withdrawn structured API now needs a page reload instead of hot-switching.
+- **DOM fallback tightened**: the observer exists only while a menu is expected,
+  honours `aria-expanded="false"`, remembers the real trigger for closing (not
+  `activeElement`), and removes its wrapper nodes on unload (it previously leaked
+  them and kept detached button references).
+- **Server**: the response no longer carries the full workspace list/order (the
+  client only reads `moved`), and a read-after-write failure can no longer be
+  reported as “order not written” — the write had already succeeded.
+- **Tooling**: `scripts/compat.mjs` replaces the 994-line matrix script (~170
+  lines, same coverage: real host packages per version + structured-menu probe).
+- Tests: 22/22. Verified in a real browser after the rewrite (menu, glyph, move,
+  toast, durable order) and against real host packages 0.2.1-rc.5 / 0.2.2-rc.1 /
+  0.2.2-rc.3.
+
 ## 0.4.2 — 2026-11-18
 
 - **The structured row now has a glyph.** 0.4.x rendered a label-only row, so on

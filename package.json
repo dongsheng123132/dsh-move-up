@@ -1,6 +1,6 @@
 {
   "name": "dsh-move-up",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Move a workspace to the top of the DeepSeek Harness sidebar once, from its menu. No favorites, pins, stars, or automatic reordering. No runtime dependencies, no saved state.",
   "license": "MIT",
   "type": "module",
@@ -41,7 +41,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "node --test test/{client,composition}.test.mjs",
     "check": "npm run typecheck && npm run build && npm test",
-    "compat:matrix": "node scripts/compat-matrix.mjs",
+    "compat:matrix": "node scripts/compat.mjs",
     "prepack": "npm run build",
     "pretest": "npm run build"
   },

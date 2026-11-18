@@ -18,7 +18,7 @@ npm whoami --registry=https://registry.npmjs.org   # 应为 hfshfg
 # package.json: version 0.4.0 → 0.4.1（修 bug）或 0.5.0（改契约/行为）
 npm install --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
 npm run check            # 类型检查 + 构建 + 全部测试，必须 0 fail
-npm run compat:matrix    # 真装多个宿主版本重跑组合测试，看 reports/ 里的 JSON
+npm run compat:matrix    # 真装多个宿主版本重跑组合测试，一张表一行一个宿主
 ```
 
 `compat:matrix` 失败时**不要发布**：它证明的是插件在真实宿主包上的激活与排序行为。

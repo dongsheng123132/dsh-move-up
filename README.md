@@ -29,13 +29,13 @@ context-menu backend:
 In the DSH desktop app: **Settings → Plugins → Add plugin**, then enter:
 
 ```text
-dsh-move-up@0.4.0
+dsh-move-up@0.4.3
 ```
 
 For a headless or CLI-managed profile:
 
 ```sh
-dsh plugin --profile <profile> add dsh-move-up@0.4.0
+dsh plugin --profile <profile> add dsh-move-up@0.4.3
 ```
 
 ### Upgrading from an older package name
